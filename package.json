@@ -1,0 +1,44 @@
+{
+  "name": "discordjs-v14-template-ts",
+  "version": "1.0.0",
+  "description": "A template for discord.js v14 bots written in TypeScript",
+  "main": "./dist/index.js",
+  "keywords": [
+    "discord.js",
+    "discord",
+    "typescript",
+    "template",
+    "v14",
+    "v14.14.1"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "AtsumiFlex",
+    "url": "https://github.com/AtsumiFlex"
+  },
+  "type": "commonjs",
+  "readme": "README.md",
+  "scripts": {
+    "start": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "deploy": "yarn build && node ./dist/index.js"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.37.67",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  }
+}
