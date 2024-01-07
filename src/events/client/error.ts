@@ -1,8 +1,6 @@
-import { EventOptions } from "../../types";
+import { Event } from "../../models";
+import { logger } from "../../function";
 
-export default {
-	event: "error",
-	listener: (client, error) => {
-		console.error(error.message);
-	},
-} satisfies EventOptions<"error">;
+export default new Event("error", (client, info) => {
+	logger.error(info);
+});

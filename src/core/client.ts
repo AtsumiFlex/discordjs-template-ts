@@ -11,9 +11,9 @@ export default class Bot extends Client {
 		super(options);
 	}
 
-	public async start() {
+	public start = () => {
 		this.setMaxListeners(0);
 		void this.login(process.env.TOKEN);
-		await this.handlers.init();
-	}
+		void this.handlers.init();
+	};
 }

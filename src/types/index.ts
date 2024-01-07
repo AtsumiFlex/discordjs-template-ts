@@ -1,2 +1,2 @@
-export * from "./command";
-export * from "./event";
+export * from "./models/command";
+export * from "./models/event";

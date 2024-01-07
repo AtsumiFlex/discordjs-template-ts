@@ -1,4 +1,4 @@
-import Bot from "../core/client";
+import Bot from "../../core/client";
 import { Awaitable, ClientEvents } from "discord.js";
 
 // Define an interface for EventOptions

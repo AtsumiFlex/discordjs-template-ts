@@ -1,8 +1,6 @@
-import { EventOptions } from "../../types";
+import { Event } from "../../models";
+import { logger } from "../../function";
 
-export default {
-	event: "warn",
-	listener: (client, info) => {
-		console.warn(info);
-	},
-} satisfies EventOptions<"warn">;
+export default new Event("warn", (client, info) => {
+	logger.warn(info);
+});

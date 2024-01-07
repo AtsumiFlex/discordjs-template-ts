@@ -1,4 +1,4 @@
-import Bot from "../core/client";
+import Bot from "../../core/client";
 import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver } from "discord.js";
 
 // Define an interface for CommandOptions

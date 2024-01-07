@@ -1,5 +1,5 @@
 import Bot from "../../core/client";
-import { CommandOptions, EventOptions } from "../../types";
+import { Event } from "../../models";
 import {
 	Collection,
 	CommandInteraction,
@@ -7,26 +7,24 @@ import {
 	inlineCode,
 	InteractionType,
 } from "discord.js";
+import { CommandOptions } from "../../types";
 
-export default {
-	event: "interactionCreate",
-	listener: async (client, interaction) => {
-		if (interaction.type !== InteractionType.ApplicationCommand) return;
-		const command = client.commands.get(interaction.commandName);
-		if (!command) return;
+export default new Event("interactionCreate", async (client, interaction) => {
+	if (interaction.type !== InteractionType.ApplicationCommand) return;
+	const command = client.commands.get(interaction.commandName);
+	if (!command) return;
 
-		try {
-			const cooldown = await handleCooldown(client, interaction, command);
-			if (!cooldown) return;
-			return command.execute(client, interaction, interaction.options as CommandInteractionOptionResolver);
-		}
-		catch {
-			return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
-		}
-	},
-} satisfies EventOptions<"interactionCreate">;
+	try {
+		const cooldown = await handleCooldown(client, interaction, command);
+		if (!cooldown) return;
+		return command.execute(client, interaction, interaction.options as CommandInteractionOptionResolver);
+	}
+	catch {
+		return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+	}
+});
 
-async function handleCooldown(client: Bot, interaction: CommandInteraction, command: CommandOptions) {
+const handleCooldown = async (client: Bot, interaction: CommandInteraction, command: CommandOptions) => {
 	if (!command.cooldown) return;
 	if (!client.cooldowns.has(command.data.name)) {
 		client.cooldowns.set(command.data.name, new Collection());
@@ -53,4 +51,4 @@ async function handleCooldown(client: Bot, interaction: CommandInteraction, comm
 	timestamps?.set(interaction.user.id, now);
 	setTimeout(() => timestamps?.delete(interaction.user.id), command.cooldown);
 	return true;
-}
+};

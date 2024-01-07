@@ -1,6 +1,6 @@
-import { CommandOptions } from "../../types";
+import { Command } from "../../models";
 
-export default {
+export default new Command({
 	data: {
 		name: "ping",
 		description: "Ping command",
@@ -10,5 +10,4 @@ export default {
 	execute: async (client, interaction, args) => {
 		await interaction.reply({ content: "Pong!", ephemeral: true });
 	},
-
-} satisfies CommandOptions;
+});

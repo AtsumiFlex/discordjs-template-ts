@@ -1,8 +1,6 @@
-import { EventOptions } from "../../types";
+import { Event } from "../../models";
+import { logger } from "../../function";
 
-export default {
-	event: "cacheSweep",
-	listener: (client, info) => {
-		console.warn(info);
-	},
-} satisfies EventOptions<"cacheSweep">;
+export default new Event("cacheSweep", (client, info) => {
+	logger.warn(info);
+});
