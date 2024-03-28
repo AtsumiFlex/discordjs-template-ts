@@ -1,5 +1,8 @@
 import type { CommandOptions } from "../types";
 
+/**
+ * Represents a command.
+ */
 export class Command implements CommandOptions {
 	public data: CommandOptions["data"];
 

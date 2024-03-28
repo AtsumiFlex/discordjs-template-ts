@@ -6,21 +6,36 @@ import { Client, Collection } from "discord.js";
 import { logger } from "./function";
 import type { CommandOptions, EventOptions } from "./types";
 
+/**
+ * Represents a Bot that extends the Client class.
+ */
 export default class Bot extends Client {
+	/**
+	 * Collection of commands with their corresponding options.
+	 */
 	public commands: Collection<string, CommandOptions> = new Collection();
 
+	/**
+	 * Creates a new instance of the Client class using the provided options.
+	 */
 	public constructor(options: ClientOptions) {
 		super(options);
 	}
 
+	/**
+	 * Starts the application by initializing commands and events, and logging in with the provided token.
+	 */
 	public async start() {
 		this.setMaxListeners(0);
 		await Promise.all([this.initCommands(), this.initEvents()]);
 		await this.login(process.env.TOKEN);
 	}
 
+	/**
+	 * Initialize commands by reading command files from the given path and loading them into `commands` map.
+	 */
 	private async initCommands() {
-		const path = join(__dirname, "..", "commands");
+		const path = join(__dirname, "commands");
 		const dirs = await readdir(path);
 
 		for (const dir of dirs) {
@@ -33,8 +48,11 @@ export default class Bot extends Client {
 		}
 	}
 
+	/**
+	 * Initializes events by loading event files from a specified directory and attaching event listeners to corresponding events.
+	 */
 	private readonly initEvents = async () => {
-		const path = join(__dirname, "..", "events");
+		const path = join(__dirname, "events");
 		const dirs = await readdir(path);
 
 		for (const dir of dirs) {

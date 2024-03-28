@@ -6,6 +6,9 @@ import type {
 } from "discord.js";
 import type Bot from "../../client";
 
+/**
+ * Represents the options for a command.
+ */
 export type CommandOptions = {
 	category: string;
 	data: ChatInputApplicationCommandData;

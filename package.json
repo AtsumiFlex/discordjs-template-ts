@@ -18,7 +18,8 @@
   "type": "commonjs",
   "readme": "README.md",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "start": "nodemon ./dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
     "build": "tsc -p tsconfig.json",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
@@ -27,6 +28,7 @@
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
+    "tslib": "^2.6.2",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0"
   },

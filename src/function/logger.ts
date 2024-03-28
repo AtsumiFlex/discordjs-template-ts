@@ -1,7 +1,13 @@
 import { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
+/**
+ * Represents the types of log messages.
+ */
 const logType = ["info", "error", "debug", "warn"];
+/**
+ * The logFormat variable represents the format of the log message.
+ */
 const logFormat = format.combine(
 	format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
 	format.splat(),
@@ -10,6 +16,9 @@ const logFormat = format.combine(
 	format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
 );
 
+/**
+ * Represents an array of DailyRotateFile objects used for file rotation transportation.
+ */
 const filesRotateTransport: DailyRotateFile[] = [];
 
 for (const type of logType) {
@@ -22,6 +31,9 @@ for (const type of logType) {
 	}));
 }
 
+/**
+ * Creates a logger instance with the specified configuration.
+ */
 export const logger = createLogger({
 	level: "debug",
 	format: logFormat,
