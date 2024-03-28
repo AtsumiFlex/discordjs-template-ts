@@ -1,10 +1,16 @@
-import Bot from "../../core/client";
-import { ChatInputApplicationCommandData, CommandInteraction, CommandInteractionOptionResolver } from "discord.js";
+import type {
+	Awaitable,
+	ChatInputApplicationCommandData,
+	ChatInputCommandInteraction,
+	CommandInteractionOptionResolver,
+} from "discord.js";
+import type Bot from "../../client";
 
-// Define an interface for CommandOptions
-export interface CommandOptions {
-    data: ChatInputApplicationCommandData;
-    category: string;
-    cooldown?: number; // Optional cooldown for the command
-    execute: (client: Bot, interaction: CommandInteraction, args: CommandInteractionOptionResolver) => Promise<void>;
-}
+/**
+ * Represents the options for a command.
+ */
+export type CommandOptions = {
+	category: string;
+	data: ChatInputApplicationCommandData;
+	execute(this: void, client: Bot, interaction: ChatInputCommandInteraction, args: Omit<CommandInteractionOptionResolver, "getFocused" | "getMessage">): Awaitable<void>;
+};

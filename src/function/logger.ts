@@ -1,48 +1,41 @@
-import chalk from "chalk";
+import { createLogger, format, transports } from "winston";
+import DailyRotateFile from "winston-daily-rotate-file";
 
-export const logger = new class Logger {
-	public generateTimestamp = () => {
-		const date = new Date();
-		const hours = date.getHours();
-		const minutes = date.getMinutes();
-		const seconds = date.getSeconds();
-		const milliseconds = date.getMilliseconds();
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
+/**
+ * Represents the types of log messages.
+ */
+const logType = ["info", "error", "debug", "warn"];
+/**
+ * The logFormat variable represents the format of the log message.
+ */
+const logFormat = format.combine(
+	format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+	format.splat(),
+	format.colorize(),
+	format.errors({ stack: true }),
+	format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
+);
 
-		return `[${day}/${month}/${year} ${hours}:${minutes}:${seconds}:${milliseconds}]`;
-	};
+/**
+ * Represents an array of DailyRotateFile objects used for file rotation transportation.
+ */
+const filesRotateTransport: DailyRotateFile[] = [];
 
-	public createLogger = (color: chalk.ChalkFunction, ...args: any[]) => {
-		return console.log(color(this.generateTimestamp(), ...args));
-	};
+for (const type of logType) {
+	filesRotateTransport.push(new DailyRotateFile({
+		filename: `logs/application-%DATE%-${type}.log`,
+		datePattern: "YYYY-MM-DD",
+		level: type,
+		maxSize: "20m",
+		maxFiles: "14d",
+	}));
+}
 
-	public info = (...args: any[]) => {
-		return this.createLogger(chalk.bold.blue, ...args);
-	};
-
-	public warn = (...args: any[]) => {
-		return this.createLogger(chalk.bold.yellow, ...args);
-	};
-
-	public error = (...args: any[]) => {
-		return this.createLogger(chalk.bold.red, ...args);
-	};
-
-	public success = (...args: any[]) => {
-		return this.createLogger(chalk.bold.green, ...args);
-	};
-
-	public debug = (...args: any[]) => {
-		return this.createLogger(chalk.bold.magenta, ...args);
-	};
-
-	public log = (...args: any[]) => {
-		return this.createLogger(chalk.bold.white, ...args);
-	};
-
-	public trace = (...args: any[]) => {
-		return this.createLogger(chalk.bold.cyan, ...args);
-	};
-};
+/**
+ * Creates a logger instance with the specified configuration.
+ */
+export const logger = createLogger({
+	level: "debug",
+	format: logFormat,
+	transports: [new transports.Console({ format: logFormat }), ...filesRotateTransport],
+});
