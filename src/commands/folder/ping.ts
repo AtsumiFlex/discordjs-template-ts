@@ -6,8 +6,10 @@ export default new Command({
 		description: "Ping command",
 	},
 	category: "category",
-	cooldown: 5000,
 	execute: async (client, interaction, args) => {
-		await interaction.reply({ content: "Pong!", ephemeral: true });
+		await interaction.reply({
+			content: "Pong!",
+			ephemeral: true,
+		});
 	},
 });

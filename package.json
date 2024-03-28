@@ -1,6 +1,6 @@
 {
-  "name": "discordjs-v14-template-ts",
-  "version": "1.0.0",
+  "name": "discordjs-template-ts",
+  "version": "1.1.0",
   "description": "A template for discord.js v14 bots written in TypeScript",
   "main": "./dist/index.js",
   "keywords": [
@@ -8,8 +8,7 @@
     "discord",
     "typescript",
     "template",
-    "v14",
-    "v14.14.1"
+    "v14"
   ],
   "license": "MIT",
   "author": {
@@ -20,27 +19,26 @@
   "readme": "README.md",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only ./src/index.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "deploy": "yarn build && node ./dist/index.js"
+    "deploy": "npm run build && node ./dist/index.js"
   },
   "dependencies": {
-    "chalk": "4.1.2",
-    "discord-api-types": "^0.37.67",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
+    "discord-api-types": "^0.37.76",
     "eslint": "^8.56.0",
+    "eslint-config-neon": "^0.1.60",
+    "eslint-formatter-pretty": "^6.0.1",
+    "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }
